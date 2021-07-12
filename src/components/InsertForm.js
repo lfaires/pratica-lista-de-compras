@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useState } from "react";
 import styled from "styled-components";
 
@@ -8,10 +9,18 @@ export default function InsertForm({ onAddItem }) {
     e.preventDefault();
 
     const newItem = { text };
-    // Save item to server
+    
+    const request = axios.post('http://localhost:4000/items',newItem)
 
-    setText("");
-    onAddItem();
+    request.then( () => {
+      setText("");
+      onAddItem();      
+    })
+
+    request.catch( () => {
+      alert("Você inseriu dados inválidos, tente novamente!")
+    })
+
   }
 
   return (
